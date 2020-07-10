@@ -18,41 +18,38 @@
             <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text">
         </div>
         <div>
-            <input name="country" list="destinations" placeholder="Destination">
-                <datalist id="destinations">
-                    <option value="CMB">
-                    <option value="CPT">
-                    <option value="DEN">
-                    <option value="EZE">
-                    <option value="GIG">
-                    <option value="HAV">
-                    <option value="HKT">
-                    <option value="MLE">
-                    <option value="PUJ">
-                    <option value="TPA">
-                    <option value="SAN">
-                    <option value="SEZ">
-                    <option value="SGN">
-                    <option value="SJO">
-                    <option value="YVR">
-                    <option value="YYC">
-                    <option value="ZRH">
-                    <option value="other">
-                </datalist>
-            </input>
+            <select name="destination" list="destinations" placeholder="Destination" required>
+                <option value="CMB - Colombo">CMB - Colombo</option>
+                <option value="CPT - Cape Town">CPT - Cape Town</option>
+                <option value="DEN - Denver">DEN - Denver</option>
+                <option value="EZE - Buenos Aires">EZE - Buenos Aires</option>
+                <option value="GIG - Rio De Janeiro">GIG - Rio De Janeiro</option>
+                <option value="HAV - Havana">HAV - Havana</option>
+                <option value="HKT - Phuket">HKT - Phuket</option>
+                <option value="MLE - Male">MLE - Male</option>
+                <option value="PUJ - Punta Cana">PUJ - Punta Cana</option>
+                <option value="TPA - Tampa">TPA - Tampa</option>
+                <option value="SAN - San Diego">SAN - San Diego</option>
+                <option value="SEZ - Seychelles">SEZ - Seychelles</option>
+                <option value="SGN - Hoh Chi Minh">SGN - Hoh Chi Minh</option>
+                <option value="SJO - San Jose">SJO - San Jose</option>
+                <option value="YVR - Vancouver">YVR - Vancouver</option>
+                <option value="YYC - Calgary">YYC - Calgary</option>
+                <option value="ZRH - Zurich">ZRH - Zurich</option>
+            </select>
         </div>
         <div>
-                public
-                <input name="color" type="radio" value="yes"> Public
-                <input name="color" type="radio" value="no"> Private
+                <input name="public" type="radio" value="True"> Public
+                <input name="public" type="radio" value="False"> Private
         </div>
 
         <div class="form-group">
             <input class="form-control" name="url" placeholder="url" type="text">
         </div>
         <div class="form-group">
-            <input class="form-control" name="description" placeholder="Description" type="text">
+            <input autocomplete="off" class="form-control" name="description" placeholder="Description" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Add</button>
     </form>
 {% endblock %}
+</option>

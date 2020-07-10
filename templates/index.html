@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+
+    {% if message == 0 %}
+        <div class="alert alert-success" role="alert">
+          Place added! Thank you for contributing!
+        </div>
+    {% endif %}
+
+    </form>
+{% endblock %}

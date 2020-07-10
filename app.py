@@ -43,8 +43,7 @@ db = SQL("sqlite:///bluefrog.db")
 @app.route("/")
 @login_required
 def index():
-    """Show portfolio of stocks"""
-    return apology("TODO")
+    return render_template("index.html", message = 0)
 
 
 @app.route("/destinations")
@@ -125,7 +124,6 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         confPassword = request.form.get("confPassword")
-        print(name, email, password, confPassword)
 
         # Check if name and email address are both provided
         if not name:
@@ -158,8 +156,44 @@ def register():
 @login_required
 def add():
     if request.method == "POST":
-        return render_template("add.html", message = 0)
-        #TODO
+
+        # Get all the parameters from the add form
+        title = request.form.get("title")
+        destination = request.form.get("destination")
+        public = request.form.get("public")
+        url = request.form.get("url")
+        description = request.form.get("description")
+        author = session["user_id"]
+
+        # Split the destination into IATA code and plain text destination
+        destination_list = destination.split(" - ")
+        iata = destination_list[0].upper()
+        destination = destination_list[1]
+
+        # Insert values into the database:
+        # Check if destination is already in the database
+        rows = db.execute("SELECT * FROM destinations WHERE iata = :iata", iata = iata)
+        # If not in the database:
+        if len(rows) == 0:
+            # Add the destination to the database (into the destinations table)
+            db.execute("INSERT INTO destinations (iata, destination) VALUES (?,?)", iata, destination)
+        
+        # Query the destinations table for the selected destination
+        dest_id = db.execute("SELECT id FROM destinations WHERE iata = :iata", iata = iata)
+        dest_id = dest_id[0]["id"]
+        # Add the place
+        db.execute("INSERT INTO places (title, dest_id, url, public, description, timestamp) VALUES(?,?,?,?,?,CURRENT_TIMESTAMP)", title, dest_id, url, public, description)
+        # Add the author
+        place_id = db.execute("SELECT MAX(id) FROM places")
+        print (place_id)
+        place_id = place_id[0]["MAX(id)"]
+        print(place_id)
+        db.execute("INSERT INTO authors (user_id, place_id) VALUES (?,?)", author, place_id)
+
+        return redirect("/")
+
+
+        
     else:
         return render_template("add.html")
 
