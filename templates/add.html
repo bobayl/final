@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add New Place
+{% endblock %}
+
+{% block main %}
+
+    {% if message == 0 %}
+        <div class="alert alert-danger" role="alert">
+          TODO
+        </div>
+    {% endif %}
+
+
+    <form action="/add" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text">
+        </div>
+        <div>
+            <input name="country" list="destinations" placeholder="Destination">
+                <datalist id="destinations">
+                    <option value="CMB">
+                    <option value="CPT">
+                    <option value="DEN">
+                    <option value="EZE">
+                    <option value="GIG">
+                    <option value="HAV">
+                    <option value="HKT">
+                    <option value="MLE">
+                    <option value="PUJ">
+                    <option value="TPA">
+                    <option value="SAN">
+                    <option value="SEZ">
+                    <option value="SGN">
+                    <option value="SJO">
+                    <option value="YVR">
+                    <option value="YYC">
+                    <option value="ZRH">
+                    <option value="other">
+                </datalist>
+            </input>
+        </div>
+        <div>
+                public
+                <input name="color" type="radio" value="yes"> Public
+                <input name="color" type="radio" value="no"> Private
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" name="url" placeholder="url" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="description" placeholder="Description" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+{% endblock %}
