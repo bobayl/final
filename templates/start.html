@@ -6,12 +6,14 @@
 
 {% block main %}
 
-    
+    {% if message == 0 %}
         <div class="alert alert-primary" role="alert">
           Welcome to BLUEfrog!
-
-          Please log in to get started
         </div>
-    
+    {% elif message == 1 %}
+        <div class="alert alert-success" role="alert">
+          Place added! Thank you for contributing!
+        </div>
+    {% endif %}
 
 {% endblock %}

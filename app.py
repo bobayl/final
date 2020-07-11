@@ -39,22 +39,25 @@ db = SQL("sqlite:///bluefrog.db")
 #if not os.environ.get("API_KEY"):
     #raise RuntimeError("API_KEY not set")
 
-
 @app.route("/")
-@login_required
 def index():
     return render_template("index.html")
+
+
+@app.route("/start/<message>")
+@login_required
+def start(message):
+    message = int(message)
+    return render_template("start.html", message = message)
 
 
 @app.route("/destinations")
 @login_required
 def destinations():
     destinations = db.execute("SELECT * FROM destinations")
-    print(destinations)
     dest_list = dict()
     for destination in destinations:
         dest_list.update({destination["destination"]:destination["iata"]})
-    print(dest_list)
     return render_template("destinations.html", dest_list = dest_list)
 
 @app.route("/destination")
@@ -103,7 +106,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect(url_for('start', message=0))
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
