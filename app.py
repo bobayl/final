@@ -1,7 +1,7 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template, request, session
+from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -43,13 +43,19 @@ db = SQL("sqlite:///bluefrog.db")
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html", message = 0)
+    return render_template("index.html")
 
 
 @app.route("/destinations")
 @login_required
 def destinations():
-    return render_template("destinations.html")
+    destinations = db.execute("SELECT * FROM destinations")
+    print(destinations)
+    dest_list = dict()
+    for destination in destinations:
+        dest_list.update({destination["destination"]:destination["iata"]})
+    print(dest_list)
+    return render_template("destinations.html", dest_list = dest_list)
 
 @app.route("/destination")
 @login_required
@@ -192,8 +198,6 @@ def add():
 
         return redirect("/")
 
-
-        
     else:
         return render_template("add.html")
 
