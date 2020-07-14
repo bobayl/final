@@ -6,51 +6,115 @@
 
 {% block main %}
 
-    {% if message == 0 %}
-        <div class="alert alert-danger" role="alert">
-          TODO
-        </div>
-    {% endif %}
+    <div class="alert alert-info" role="alert">
+      Please add the details of your place in the form below and share it with the community.<br>
+      BLUEfrog and its users already thanks you for contributing!
+    </div>
 
 
     <form action="/add" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text">
+        <!--Destination-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="destination">Destination</label>
+          </div>
+          <select name="destination" class="custom-select" id="destination" required>
+            <option selected>Choose...</option>
+            <option value="CUN - Cancun">CUN - Cancun</option>
+            <option value="CMB - Colombo">CMB - Colombo</option>
+            <option value="CPT - Cape Town">CPT - Cape Town</option>
+            <option value="DEN - Denver">DEN - Denver</option>
+            <option value="EZE - Buenos Aires">EZE - Buenos Aires</option>
+            <option value="GIG - Rio De Janeiro">GIG - Rio De Janeiro</option>
+            <option value="HAV - Havana">HAV - Havana</option>
+            <option value="HKT - Phuket">HKT - Phuket</option>
+            <option value="MLE - Male">MLE - Male</option>
+            <option value="PUJ - Punta Cana">PUJ - Punta Cana</option>
+            <option value="TPA - Tampa">TPA - Tampa</option>
+            <option value="SAN - San Diego">SAN - San Diego</option>
+            <option value="SEZ - Seychelles">SEZ - Seychelles</option>
+            <option value="SGN - Hoh Chi Minh">SGN - Hoh Chi Minh</option>
+            <option value="SJO - San Jose">SJO - San Jose</option>
+            <option value="YVR - Vancouver">YVR - Vancouver</option>
+            <option value="YYC - Calgary">YYC - Calgary</option>
+            <option value="ZRH - Zurich">ZRH - Zurich</option>
+          </select>
         </div>
-        <div>
-            <select name="destination" list="destinations" placeholder="Destination" required>
-                <option value="CUN - Cancun">CUN - Cancun</option>
-                <option value="CMB - Colombo">CMB - Colombo</option>
-                <option value="CPT - Cape Town">CPT - Cape Town</option>
-                <option value="DEN - Denver">DEN - Denver</option>
-                <option value="EZE - Buenos Aires">EZE - Buenos Aires</option>
-                <option value="GIG - Rio De Janeiro">GIG - Rio De Janeiro</option>
-                <option value="HAV - Havana">HAV - Havana</option>
-                <option value="HKT - Phuket">HKT - Phuket</option>
-                <option value="MLE - Male">MLE - Male</option>
-                <option value="PUJ - Punta Cana">PUJ - Punta Cana</option>
-                <option value="TPA - Tampa">TPA - Tampa</option>
-                <option value="SAN - San Diego">SAN - San Diego</option>
-                <option value="SEZ - Seychelles">SEZ - Seychelles</option>
-                <option value="SGN - Hoh Chi Minh">SGN - Hoh Chi Minh</option>
-                <option value="SJO - San Jose">SJO - San Jose</option>
-                <option value="YVR - Vancouver">YVR - Vancouver</option>
-                <option value="YYC - Calgary">YYC - Calgary</option>
-                <option value="ZRH - Zurich">ZRH - Zurich</option>
-            </select>
+        <!--Category-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="category">Category</label>
+          </div>
+          <select name="category1" class="custom-select" id="category" required>
+            <option selected>Choose...</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Bar">Bar</option>
+            <option value="Club">Club</option>
+            <option value="Sports">Sports</option>
+            <option value="Excursion">Excursion</option>
+            <option value="Café">Café</option>
+            <option value="Health &amp; Beauty">Health &amp; Beauty</option>
+          </select>
         </div>
-        <div>
-                <input name="public" type="radio" value="True"> Public
-                <input name="public" type="radio" value="False"> Private
+        <!--Additional Category-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="category2">Additional Category</label>
+          </div>
+          <select name="category2" class="custom-select" id="category2">
+            <option selected>(Optional)</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Bar">Bar</option>
+            <option value="Club">Club</option>
+            <option value="Sports">Sports</option>
+            <option value="Excursion">Excursion</option>
+            <option value="Café">Café</option>
+            <option value="Health &amp; Beauty">Health &amp; Beauty</option>
+          </select>
+        </div>
+        <!--Title-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+          </div>
+          <input name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="(required)" required>
+        </div>
+        <!--URL-->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">https://</span>
+          </div>
+          <input placeholder="(optional, but highly appreciated)"type="text" name="url" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+        </div>
+        <!--Description-->
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+          </div>
+          <textarea name="description"class="form-control" aria-label="With textarea" placeholder="(optional)"></textarea>
+        </div>
+        <!--Browse and upload image file-->
+        <div class="input-group mb-3" style="margin-top: 20px;">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon1">Add Image</button>
+          </div>
+          <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+        <!--Public/Private-->
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top: 20px">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="public" id="public" value="True" checked> Public
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="public" id="private" value="False"> Private
+          </label>
         </div>
 
-        <div class="form-group">
-            <input class="form-control" name="url" placeholder="url" type="text">
+        <!--Submit Button-->
+        <div>
+          <button type="submit" class="btn btn-secondary" style="margin-top: 20px; align: center;">Add Place</button>
         </div>
-        <div class="form-group">
-            <input autocomplete="off" class="form-control" name="description" placeholder="Description" type="text">
-        </div>
-        <button class="btn btn-primary" type="submit">Add</button>
+
     </form>
 {% endblock %}
 </option>

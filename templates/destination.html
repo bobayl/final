@@ -1,15 +1,30 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Destination: ...
+    Destination: {{ iata }}
 {% endblock %}
 
 {% block main %}
 
-      <div class="destinations">
-            here comes the destination info
-      </div>
-    
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Website</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+<tbody>
+  {% for place in place_list %}
+  <tr>
+    <th scope="row">{{ loop.index }}</th>
+    <td><a href={{ url_for('place', place_id=place["id"]) }}>{{ place["title"] }}</a></td>
+    <td><a href={{ place["url"] }}>{{ place["url"] }}</a></td>
+    <td>{{ place["description"] }}</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+
 {% endblock %}
-
-

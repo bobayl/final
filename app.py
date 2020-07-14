@@ -6,6 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 
 from helpers import apology, login_required, lookup, usd
 
@@ -54,23 +55,29 @@ def start(message):
 @app.route("/destinations")
 @login_required
 def destinations():
+    # Get all the destinations from the database
     destinations = db.execute("SELECT * FROM destinations")
+    # Create an empty destination dictionary
     dest_list = dict()
     for destination in destinations:
         dest_list.update({destination["destination"]:destination["iata"]})
     return render_template("destinations.html", dest_list = dest_list)
 
-@app.route("/destination")
+@app.route("/destination/<iata>")
 @login_required
-def destination():
-    return render_template("destination.html")
+def destination(iata):
+    destination = db.execute("SELECT * FROM destinations WHERE iata = :iata", iata = iata)
+    dest_id = destination[0]["id"]
+    place_list = db.execute("SELECT id, title, url, description FROM places WHERE dest_id = :dest_id", dest_id = dest_id)
+    print(place_list)
+    return render_template("destination.html", place_list = place_list, iata = iata)
 
-
-@app.route("/history")
+@app.route("/place/<int:place_id>")
 @login_required
-def history():
-    """Show history of transactions"""
-    return apology("TODO")
+def place(place_id):
+    place = db.execute("SELECT * FROM places WHERE id = :place_id", place_id = place_id)
+    print(place)
+    return render_template("place.html", place = place)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -173,6 +180,7 @@ def add():
         url = request.form.get("url")
         description = request.form.get("description")
         author = session["user_id"]
+        categories = [request.form.get("category1"), request.form.get("category2")]
 
         # Split the destination into IATA code and plain text destination
         destination_list = destination.split(" - ")
@@ -186,7 +194,7 @@ def add():
         if len(rows) == 0:
             # Add the destination to the database (into the destinations table)
             db.execute("INSERT INTO destinations (iata, destination) VALUES (?,?)", iata, destination)
-        
+
         # Query the destinations table for the selected destination
         dest_id = db.execute("SELECT id FROM destinations WHERE iata = :iata", iata = iata)
         dest_id = dest_id[0]["id"]
@@ -194,12 +202,16 @@ def add():
         db.execute("INSERT INTO places (title, dest_id, url, public, description, timestamp) VALUES(?,?,?,?,?,CURRENT_TIMESTAMP)", title, dest_id, url, public, description)
         # Add the author
         place_id = db.execute("SELECT MAX(id) FROM places")
-        print (place_id)
         place_id = place_id[0]["MAX(id)"]
-        print(place_id)
         db.execute("INSERT INTO authors (user_id, place_id) VALUES (?,?)", author, place_id)
+        # Add the categories
+        for category in categories:
+            db.execute("INSERT INTO categories (place_id, category) VALUES (?,?)", place_id, category)
 
-        return redirect("/")
+        # Add the image if any
+
+
+        return redirect(url_for('start', message=1))
 
     else:
         return render_template("add.html")

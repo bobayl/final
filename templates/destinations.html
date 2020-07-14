@@ -8,10 +8,8 @@
 
       <div class="destinations">
             {% for destination, iata in dest_list.items() %}
-            <div><a href="/destination">{{ destination }} - {{ iata }}</a></div>
+            <div><a href={{ url_for('destination', iata=iata) }}>{{ destination }} - {{ iata }}</a></div>
             {% endfor %}
       </div>
-    
+
 {% endblock %}
-
-
