@@ -12,14 +12,14 @@
     </div>
 
 
-    <form action="/add" method="post">
+    <form action="/add" method="post" enctype=multipart/form-data>
         <!--Destination-->
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <label class="input-group-text" for="destination">Destination</label>
           </div>
           <select name="destination" class="custom-select" id="destination" required>
-            <option selected>Choose...</option>
+            <option selected>Choose... (required)</option>
             <option value="CUN - Cancun">CUN - Cancun</option>
             <option value="CMB - Colombo">CMB - Colombo</option>
             <option value="CPT - Cape Town">CPT - Cape Town</option>
@@ -46,7 +46,7 @@
             <label class="input-group-text" for="category">Category</label>
           </div>
           <select name="category1" class="custom-select" id="category" required>
-            <option selected>Choose...</option>
+            <option selected>Choose... (required)</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Bar">Bar</option>
             <option value="Club">Club</option>
@@ -94,11 +94,14 @@
           <textarea name="description"class="form-control" aria-label="With textarea" placeholder="(optional)"></textarea>
         </div>
         <!--Browse and upload image file-->
-        <div class="input-group mb-3" style="margin-top: 15px;">
+        <div class="input-group mb-3" style="margin-top: 10px">
           <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon1">Add Image</button>
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
           </div>
-          <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          <div class="custom-file">
+            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+          </div>
         </div>
         <!--Public/Private-->
         <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top: 20px">
@@ -112,7 +115,7 @@
 
         <!--Submit Button-->
         <div>
-          <button type="submit" class="btn btn-secondary" style="margin-top: 20px; align: center;">Add Place</button>
+          <button type="submit" value="Upload" class="btn btn-secondary" style="margin-top: 20px; align: center;">Add Place</button>
         </div>
 
     </form>
