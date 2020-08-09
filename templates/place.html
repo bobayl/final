@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ iata }}: {{ place[0]["title"] }}
+{% endblock %}
+
+{% block main %}
+
+
+
+<div class="card mb-3">
+
+  {% if image_path != None %}
+  <img src="/static/images/{{ image_path }}" class="card-img-top" alt="Sorry, no image for this place.">
+  {% else %}
+  <p>Sorry no images for this place.</p>
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ place[0]["title"] }}</h5>
+    <p class="card-text">{{ place[0]["description"] }}</p>
+    <p class="card-text"><small class="text-muted">Added {{ place[0]["timestamp"] }}</small></p>
+  </div>
+</div>
+
+{% endblock %}

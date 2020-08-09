@@ -10,8 +10,35 @@ from werkzeug.utils import secure_filename
 
 from helpers import apology, login_required, lookup, usd
 
+# For image upload define folders etc.
+UPLOAD_FOLDER = '/Users/laurent/programming/finalproject/final/static/images/'
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def upload_file(iata, place):
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            path = UPLOAD_FOLDER + iata + '/' + place
+            if not os.path.exists(path):
+                os.makedirs(path)
+            file.save(os.path.join(path, filename))
+
+
 # Configure application
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -69,15 +96,27 @@ def destination(iata):
     destination = db.execute("SELECT * FROM destinations WHERE iata = :iata", iata = iata)
     dest_id = destination[0]["id"]
     place_list = db.execute("SELECT id, title, url, description FROM places WHERE dest_id = :dest_id", dest_id = dest_id)
-    print(place_list)
+    #print(place_list)
     return render_template("destination.html", place_list = place_list, iata = iata)
 
 @app.route("/place/<int:place_id>")
 @login_required
 def place(place_id):
     place = db.execute("SELECT * FROM places WHERE id = :place_id", place_id = place_id)
-    print(place)
-    return render_template("place.html", place = place)
+    dest_id = int(place[0]["dest_id"])
+    iata = db.execute("SELECT iata FROM destinations WHERE id = :dest_id", dest_id = dest_id)
+    iata = iata[0]["iata"]
+    image_path = "/Users/laurent/programming/finalproject/final/static/images/" + iata + '/' + str(place_id)
+
+    if os.path.exists(image_path):
+        for image in os.listdir(image_path):
+            path = iata + '/' + str(place_id) + '/' + image
+
+            image_path = path
+    else:
+        image_path = None
+        
+    return render_template("place.html", place = place, iata = iata, image_path = image_path)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -209,7 +248,8 @@ def add():
             db.execute("INSERT INTO categories (place_id, category) VALUES (?,?)", place_id, category)
 
         # Add the image if any
-
+        place = str(place_id)
+        upload_file(iata, place)
 
         return redirect(url_for('start', message=1))
 
