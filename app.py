@@ -71,6 +71,10 @@ db = SQL("sqlite:///bluefrog.db")
 def index():
     return render_template("index.html")
 
+@app.route("/mybluefrog")
+def mybluefrog():
+    return render_template("mybluefrog.html")
+
 
 @app.route("/start/<message>")
 @login_required
@@ -115,7 +119,7 @@ def place(place_id):
             image_path = path
     else:
         image_path = None
-        
+
     return render_template("place.html", place = place, iata = iata, image_path = image_path)
 
 
