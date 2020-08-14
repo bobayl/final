@@ -73,7 +73,11 @@ def index():
 
 @app.route("/mybluefrog")
 def mybluefrog():
-    return render_template("mybluefrog.html")
+    user_id = session["user_id"]
+    #print(user_id)
+    myPlaces = db.execute("SELECT destination, title, description, name FROM places JOIN authors ON places.id = authors.place_id JOIN destinations ON destinations.id = places.dest_id JOIN users ON users.id = authors.user_id WHERE authors.user_id = :user_id ORDER BY destination, title", user_id = user_id)
+    print(myPlaces)
+    return render_template("mybluefrog.html", myPlaces = myPlaces)
 
 
 @app.route("/start/<message>")

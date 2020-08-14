@@ -9,7 +9,27 @@
 
 
 <div>
-  My uploaded places (I am the author)
+  <h3> My Places (added by me)</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Destination</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Author</th>
+      </tr>
+    </thead>
+  <tbody>
+    {% for place in myPlaces %}
+    <tr>
+      <td> {{ place["destination"] }}</td>
+      <td> {{ place["title"] }}</td>
+      <td> {{ place["description"] }}</td>
+      <td>{{ place["name"] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
 </div>
 
 <div>
