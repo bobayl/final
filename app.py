@@ -1,6 +1,8 @@
 import os
 
-from cs50 import SQL
+#from cs50 import SQL
+from flask_sqlalchemy import SQLAlchemy
+
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
@@ -61,7 +63,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///bluefrog.db")
+#db = SQL("sqlite:///bluefrog.db")
 
 # Make sure API key is set
 #if not os.environ.get("API_KEY"):
