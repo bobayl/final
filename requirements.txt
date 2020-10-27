@@ -2,7 +2,7 @@ altgraph==0.10.2
 asn1crypto==0.24.0
 bdist-mpkg==0.5.0
 cffi==1.12.2
-cryptography==2.6.1
+cryptography==3.2
 enum34==1.1.6
 future==0.17.1
 gunicorn==19.10.0
